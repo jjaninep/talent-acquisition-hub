@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub de Entrevistas Técnicas</title>
+  
+  <!-- Fontes e Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Arquivo de Estilos Externo -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cabeçalho Principal -->
+  <header class="hero-header">
+    <div class="hero-tagline">
+      <i class="fa-solid fa-code-branch"></i> Área Técnica & Talent Acquisition
+    </div>
+    <h1 class="hero-title">Hub de Entrevistas Técnicas</h1>
+    <p class="hero-subtitle">
+      Painel central de governança, banco de avaliadores (Pool Técnico), alinhamento de critérios e scorecards padronizados para condução ágil e inclusiva.
+    </p>
+  </header>
+
+  <!-- Navegação de Rolagem Suave -->
+  <div class="nav-bar-container">
+    <nav class="nav-wrapper">
+      <button class="nav-btn active" onclick="scrollToSection('sec-pool', this)"><i class="fa-solid fa-table-list"></i> Pool de Entrevistadores</button>
+      <button class="nav-btn" onclick="scrollToSection('sec-pilares', this)"><i class="fa-solid fa-shield-halved"></i> Pilares do Programa</button>
+      <button class="nav-btn" onclick="scrollToSection('sec-fluxo', this)"><i class="fa-solid fa-arrows-split-up-and-left"></i> Fluxo Operacional</button>
+      <button class="nav-btn" onclick="scrollToSection('sec-scorecard', this)"><i class="fa-solid fa-star"></i> Matriz de Scorecard</button>
+      <button class="nav-btn" onclick="scrollToSection('sec-papeis', this)"><i class="fa-solid fa-handshake"></i> Papéis e SLAs</button>
+    </nav>
+  </div>
+
+  <main class="main-content">
+
+    <!-- SEÇÃO POOL TÉCNICO -->
+    <section id="sec-pool" class="pool-highlight-section">
+      <div class="pool-header-box">
+        <div class="pool-title-group">
+          <h2><i class="fa-solid fa-database" style="color: var(--accent-purple);"></i> Visualização do Pool Técnico</h2>
+          <p>Consulte em tempo real os avaliadores cadastrados, especialidades técnicas, senioridade e status de habilitação.</p>
+        </div>
+        <div class="pool-stats-row">
+          <div class="stat-badge">
+            <span class="stat-num" id="totalAvaliadores">9</span>
+            <span class="stat-lbl">Avaliadores</span>
+          </div>
+          <div class="stat-badge">
+            <span class="stat-num" id="totalStacks">7</span>
+            <span class="stat-lbl">Stacks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtros e Busca -->
+      <div class="filters-bar">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar avaliador ou stack..." onkeyup="filterPool()">
+        </div>
+        <div>
+          <select id="stackFilter" class="filter-select" onchange="filterPool()">
+            <option value="ALL">Todas as Stacks</option>
+            <option value="Java">Java</option>
+            <option value="Node.js">Node.js</option>
+            <option value="React.js / React Native">React.js / React Native</option>
+            <option value="Marketing Cloud">Marketing Cloud</option>
+            <option value="Dev Salesforce">Dev Salesforce</option>
+            <option value="PHP">PHP</option>
+            <option value="Angular">Angular</option>
+          </select>
+        </div>
+        <div>
+          <select id="seniorityFilter" class="filter-select" onchange="filterPool()">
+            <option value="ALL">Todas as Senioridades</option>
+            <option value="Sênior">Sênior</option>
+            <option value="Pleno II">Pleno II</option>
+            <option value="Tech Lead">Tech Lead</option>
+          </select>
+        </div>
+        <div>
+          <a href="https://docs.google.com/spreadsheets/d/1ZEelkxpjVO2tZXvVYCd8JQH3aUeTq0B0kKsG6_UPkxA/edit?gid=0#gid=0" target="_blank" class="btn-sheet-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Google Sheets
+          </a>
+        </div>
+      </div>
+
+      <!-- Tabela do Pool -->
+      <div class="table-container">
+        <table class="pool-table">
+          <thead>
+            <tr>
+              <th>Pessoa Entrevistadora</th>
+              <th>Stack Principal</th>
+              <th>Senioridade</th>
+              <th>Status / Habilitação</th>
+              <th>Notas / Observações</th>
+            </tr>
+          </thead>
+          <tbody id="poolTableBody">
+            <tr data-stack="Java" data-seniority="Sênior">
+              <td><strong>Hugo Dutra</strong></td>
+              <td><span class="tag-stack">Java</span></td>
+              <td><span class="seniority-pill seniority-senior">Sênior</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Especialista em microsserviços, Spring Boot e arquitetura backend.</td>
+            </tr>
+            <tr data-stack="Java" data-seniority="Pleno II">
+              <td><strong>Matheus Rodrigues</strong></td>
+              <td><span class="tag-stack">Java</span></td>
+              <td><span class="seniority-pill seniority-pleno">Pleno II</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Focado em APIs REST, mensageria e testes automatizados.</td>
+            </tr>
+            <tr data-stack="Node.js" data-seniority="Sênior">
+              <td><strong>José Camelo</strong></td>
+              <td><span class="tag-stack">Node.js</span></td>
+              <td><span class="seniority-pill seniority-senior">Sênior</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Backend assíncrono, Express/NestJS e bancos SQL/NoSQL.</td>
+            </tr>
+            <tr data-stack="React.js / React Native" data-seniority="Tech Lead">
+              <td><strong>Byron Kamal</strong></td>
+              <td><span class="tag-stack">React.js / React Native</span></td>
+              <td><span class="seniority-pill seniority-senior">Tech Lead</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Conduz avaliações de Frontend web moderno e Mobile.</td>
+            </tr>
+            <tr data-stack="Marketing Cloud" data-seniority="Sênior">
+              <td><strong>Hamilton Rosa</strong></td>
+              <td><span class="tag-stack">Marketing Cloud</span></td>
+              <td><span class="seniority-pill seniority-senior">Sênior</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Especialista em jornadas SFMC, automações e integrações.</td>
+            </tr>
+            <tr data-stack="Marketing Cloud" data-seniority="Sênior">
+              <td><strong>Wesley Marco</strong></td>
+              <td><span class="tag-stack">Marketing Cloud</span></td>
+              <td><span class="seniority-pill seniority-senior">Sênior</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Experiência em ecossistemas de dados, cloud analytics e martech.</td>
+            </tr>
+            <tr data-stack="Dev Salesforce" data-seniority="Sênior">
+              <td><strong>Renan Souza</strong></td>
+              <td><span class="tag-stack">Dev Salesforce</span></td>
+              <td><span class="seniority-pill seniority-senior">Sênior</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Desenvolvimento Core Apex, LWC, arquitetura Salesforce.</td>
+            </tr>
+            <tr data-stack="Angular" data-seniority="Pleno II">
+              <td><strong>Adenilson Junior</strong></td>
+              <td><span class="tag-stack">Angular</span></td>
+              <td><span class="seniority-pill seniority-pleno">Pleno II</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Focado em TypeScript, RxJS e componentização frontend.</td>
+            </tr>
+            <tr data-stack="PHP" data-seniority="Sênior">
+              <td><strong>Remulo Costa</strong></td>
+              <td><span class="tag-stack">PHP</span></td>
+              <td><span class="seniority-pill seniority-senior">Sênior</span></td>
+              <td><span class="status-badge"><span class="dot-status"></span> Autônomo</span></td>
+              <td>Arquiteturas modernas (Laravel/Symfony) e integrações.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SEÇÃO PILARES -->
+    <section id="sec-pilares" class="section-card">
+      <div class="section-title"><i class="fa-solid fa-shapes"></i> Pilares do Programa Técnico</div>
+      <div class="pillars-grid">
+        <div class="pillar-box">
+          <h4><i class="fa-solid fa-user-shield"></i> Elegibilidade</h4>
+          <p>Mínimo de nível Pleno II ou Sênior, 6 meses de empresa e histórico de entregas técnicas para integrar o pool.</p>
+        </div>
+        <div class="pillar-box">
+          <h4><i class="fa-solid fa-graduation-cap"></i> Capacitação</h4>
+          <p>Treinamento obrigatório de Entrevistas Inclusivas e mínimo de 2 sessões em formato Shadowing antes de conduções autônomas.</p>
+        </div>
+        <div class="pillar-box">
+          <h4><i class="fa-solid fa-clipboard-check"></i> Padronização</h4>
+          <p>Scorecards estruturados no ATS (Greenhouse) com registro obrigatório de evidências técnicas.</p>
+        </div>
+        <div class="pillar-box">
+          <h4><i class="fa-solid fa-scale-balanced"></i> Governança</h4>
+          <p>Balanceamento da carga de entrevistas por avaliador para preservar as entregas dos projetos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO FLUXO -->
+    <section id="sec-fluxo" class="section-card">
+      <div class="section-title"><i class="fa-solid fa-diagram-project"></i> Fluxo Operacional da Entrevista</div>
+      <div class="workflow-timeline">
+        <div class="workflow-step">
+          <div class="step-number">1</div>
+          <h4>Solicitação</h4>
+          <p>Após aprovação no RH, TA solicita par técnico no pool compatível com a stack.</p>
+        </div>
+        <div class="workflow-step">
+          <div class="step-number">2</div>
+          <h4>Agendamento</h4>
+          <p>Envio de convites, link da sala, briefing do candidato e scorecard no Greenhouse.</p>
+        </div>
+        <div class="workflow-step">
+          <div class="step-number">3</div>
+          <h4>Condução</h4>
+          <p>Sessão prática focada em raciocínio, fundamentos e resolução prática de problemas.</p>
+        </div>
+        <div class="workflow-step">
+          <div class="step-number">4</div>
+          <h4>Devolutiva</h4>
+          <p>Preenchimento mandatório das evidências e recomendação técnica no sistema ATS.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO SCORECARD -->
+    <section id="sec-scorecard" class="section-card">
+      <div class="section-title"><i class="fa-solid fa-list-ol"></i> Dimensões de Avaliação (Scorecard Greenhouse)</div>
+      <div class="scorecard-grid">
+        <div class="scorecard-item">
+          <i class="fa-solid fa-cubes"></i>
+          <h4>1. Fundamentos Técnicos</h4>
+          <p>Algoritmos, estruturas de dados, concorrência e boas práticas de engenharia de software.</p>
+        </div>
+        <div class="scorecard-item">
+          <i class="fa-solid fa-puzzle-piece"></i>
+          <h4>2. Resolução de Problemas</h4>
+          <p>Decomposição de problemas ambíguos, perguntas clarificadoras e análise de trade-offs.</p>
+        </div>
+        <div class="scorecard-item">
+          <i class="fa-solid fa-code"></i>
+          <h4>3. Qualidade de Código</h4>
+          <p>Código limpo, sustentável, modular, com testes e aderência a padrões arquiteturais.</p>
+        </div>
+        <div class="scorecard-item">
+          <i class="fa-solid fa-comments"></i>
+          <h4>4. Comunicação & Colaboração</h4>
+          <p>Clareza na articulação do raciocínio, receptividade a sugestões e escuta ativa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO PAPÉIS E SLAS -->
+    <section id="sec-papeis" class="section-card">
+      <div class="section-title"><i class="fa-solid fa-users-between-lines"></i> Papéis e Responsabilidades</div>
+      <table class="roles-table">
+        <thead>
+          <tr>
+            <th>Papel</th>
+            <th>Atribuições Operacionais</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Talent Acquisition (TA)</td>
+            <td>Gestão da vaga no ATS, convocação do avaliador técnico conforme stack, envio do briefing e cobrança dos prazos.</td>
+          </tr>
+          <tr>
+            <td>Entrevistador Técnico</td>
+            <td>Condução da sessão prática, avaliação isenta de vieses, registro de evidências objetivas e recomendação no parecer.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Hub de Entrevistas Técnicas • Material oficial de governança técnica.</p>
+  </footer>
+
+  <!-- Script Externo -->
+  <script src="script.js"></script>
+</body>
+</html>
